@@ -15,11 +15,11 @@ import javax.persistence.Table;
 public class OrdersEntity extends BaseEntity{
 	
 	@Column(name = "code")
-	private int code;
+	private String code;
 	
 	
 	@Column(name = "totalamount")
-	private int totalAmount;
+	private Long totalAmount;
 	
 	@ManyToOne
     @JoinColumn(name = "staff_id")
@@ -35,11 +35,11 @@ public class OrdersEntity extends BaseEntity{
 	
 	
 	
-	public int getTotalAmount() {
+	public Long getTotalAmount() {
 		return totalAmount;
 	}
 
-	public void setTotalAmount(int totalAmount) {
+	public void setTotalAmount(Long totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 
@@ -51,11 +51,11 @@ public class OrdersEntity extends BaseEntity{
 		this.staff = staff;
 	}
 
-	public int getCode() {
+	public String getCode() {
 		return code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 

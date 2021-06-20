@@ -20,11 +20,11 @@ public class ProductEntity extends BaseEntity{
 	private String name;
 	
 	@Column(name = "price")
-	private String price;
+	private Long price;
 
 
 	@Column(name = "quantity")
-	private String quantity;
+	private Long quantity;
 	
 	
 	@Column(name = "note")
@@ -56,13 +56,7 @@ public class ProductEntity extends BaseEntity{
 
 	
 
-	public String getPrice() {
-		return price;
-	}
 
-	public void setPrice(String price) {
-		this.price = price;
-	}
 
 	public String getNote() {
 		return note;
@@ -80,11 +74,21 @@ public class ProductEntity extends BaseEntity{
 		this.category = category;
 	}
 
-	public String getQuantity() {
+
+
+	public Long getPrice() {
+		return price;
+	}
+
+	public void setPrice(Long price) {
+		this.price = price;
+	}
+
+	public Long getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(String quantity) {
+	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
 

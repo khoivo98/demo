@@ -11,10 +11,10 @@ import javax.persistence.Table;
 public class OrderDetailEntity extends BaseEntity{
 		
 	@Column(name = "quantity")
-	private int quantity;
+	private Long quantity;
 	
 	@Column(name = "amount")
-	private int amount;
+	private Long amount;
 	
 	@ManyToOne
     @JoinColumn(name = "product_id")
@@ -24,19 +24,21 @@ public class OrderDetailEntity extends BaseEntity{
     @JoinColumn(name = "orders_code")
     private OrdersEntity orders;
 
-	public int getQuantity() {
+	
+
+	public Long getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
 
-	public int getAmount() {
+	public Long getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(Long amount) {
 		this.amount = amount;
 	}
 

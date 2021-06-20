@@ -27,7 +27,7 @@ public class CustomerEntity extends BaseEntity{
 	private String addRess;
 	
 	@Column(name = "phone")
-	private Integer phone;
+	private Long phone;
 	
 	
 	@ManyToOne
@@ -79,12 +79,12 @@ public class CustomerEntity extends BaseEntity{
 	}
 
 
-	public Integer getPhone() {
+	public Long getPhone() {
 		return phone;
 	}
 
 
-	public void setPhone(Integer phone) {
+	public void setPhone(Long phone) {
 		this.phone = phone;
 	}
 

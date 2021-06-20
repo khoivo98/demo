@@ -15,8 +15,8 @@ import com.laptrinhjavaweb.entity.ProductEntity;
 import com.laptrinhjavaweb.repository.CategoryRepository;
 import com.laptrinhjavaweb.repository.ProductRepository;
 import com.laptrinhjavaweb.service.IProductService;
-@Service
 
+@Service
 public class ProductService implements IProductService{
 
 	
@@ -28,6 +28,8 @@ public class ProductService implements IProductService{
 	
 	@Autowired
 	private ProductConverter productConverter;
+	
+	
 	@Override
 	public ProductDTO save(ProductDTO productDTO) {
 		ProductEntity productEntity = new ProductEntity();

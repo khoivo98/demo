@@ -28,10 +28,10 @@ public class StaffEntity extends BaseEntity {
 	private String addRess;
 	
 	@Column(name = "phone")
-	private Integer phone;
+	private Long phone;
 	
 	@Column(name = "salary")
-	private Integer salary;
+	private Long salary;
 	
 	
 	@Column
@@ -104,20 +104,22 @@ public class StaffEntity extends BaseEntity {
 		this.addRess = addRess;
 	}
 
-	public Integer getPhone() {
+	public Long getPhone() {
 		return phone;
 	}
 
-	public void setPhone(Integer phone) {
+	public void setPhone(Long phone) {
 		this.phone = phone;
 	}
 
-	public Integer getSalary() {
+	public Long getSalary() {
 		return salary;
 	}
 
-	public void setSalary(Integer salary) {
+	public void setSalary(Long salary) {
 		this.salary = salary;
 	}
+
+
 	
 }
