@@ -21,13 +21,7 @@ public class CategoryEntity extends BaseEntity {
 	@OneToMany(mappedBy = "category")
 	private List<ProductEntity> products = new ArrayList<>();
 
-	public List<ProductEntity> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<ProductEntity> products) {
-		this.products = products;
-	}
+	
 
 	public String getCode() {
 		return code;
@@ -45,5 +39,15 @@ public class CategoryEntity extends BaseEntity {
 		this.name = name;
 	}
 
+	public List<ProductEntity> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<ProductEntity> products) {
+		this.products = products;
+	}
+
+	
+	
 
 }

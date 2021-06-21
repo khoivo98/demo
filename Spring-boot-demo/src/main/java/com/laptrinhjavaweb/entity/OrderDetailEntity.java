@@ -2,6 +2,7 @@ package com.laptrinhjavaweb.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -16,11 +17,11 @@ public class OrderDetailEntity extends BaseEntity{
 	@Column(name = "amount")
 	private Long amount;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private ProductEntity product;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "orders_code")
     private OrdersEntity orders;
 
