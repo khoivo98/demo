@@ -8,6 +8,7 @@ public class ProductDTO extends AbstractDTO<ProductDTO>{
 	private Long quantity;
 	private String note;
 	private String categoryCode;
+	private String categoryName;
 	private Long categoryId;
 	
 	public String getCode() {
@@ -51,6 +52,12 @@ public class ProductDTO extends AbstractDTO<ProductDTO>{
 	}
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
+	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 	
 }
