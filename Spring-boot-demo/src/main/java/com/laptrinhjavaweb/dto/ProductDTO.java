@@ -7,7 +7,6 @@ public class ProductDTO extends AbstractDTO<ProductDTO>{
 	private Long price;
 	private Long quantity;
 	private String note;
-	private String categoryCode;
 	private String categoryName;
 	private Long categoryId;
 	
@@ -40,12 +39,6 @@ public class ProductDTO extends AbstractDTO<ProductDTO>{
 	}
 	public void setNote(String note) {
 		this.note = note;
-	}
-	public String getCategoryCode() {
-		return categoryCode;
-	}
-	public void setCategoryCode(String categoryCode) {
-		this.categoryCode = categoryCode;
 	}
 	public Long getCategoryId() {
 		return categoryId;

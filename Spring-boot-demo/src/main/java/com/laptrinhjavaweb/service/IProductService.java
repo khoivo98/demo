@@ -12,4 +12,5 @@ public interface IProductService {
 	List<ProductDTO> findAll();
 	int totalItem();
 	void deleteProduct(long[] ids);
+	ProductDTO findById(Long id);
 }

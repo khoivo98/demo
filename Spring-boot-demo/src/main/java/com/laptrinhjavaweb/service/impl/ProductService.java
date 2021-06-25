@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.laptrinhjavaweb.dto.ProductDTO;
-import com.laptrinhjavaweb.entity.CategoryEntity;
 import com.laptrinhjavaweb.entity.ProductEntity;
-import com.laptrinhjavaweb.repository.CategoryRepository;
 import com.laptrinhjavaweb.repository.ProductRepository;
 import com.laptrinhjavaweb.service.IProductService;
 
@@ -23,25 +21,19 @@ public class ProductService implements IProductService {
 	@Autowired
 	private ProductRepository productRepository;
 
-	@Autowired
-	private CategoryRepository categoryRepository;
-
 	private final ModelMapper mapper = new ModelMapper();
 
 	@Override
 	@Transactional
 	public ProductDTO save(ProductDTO dto) {
-		//lay id the loai
-		CategoryEntity category = categoryRepository.findOneByCode(dto.getCategoryCode());
 		ProductEntity entity = new ProductEntity();
 		if (dto.getId() != null) {
-			//cap nhat
-			entity =  productRepository.findById(dto.getId()).get();
+			// cap nhat
+			entity = productRepository.findById(dto.getId()).get();
 		}
-		entity = mapper.map(dto,ProductEntity.class);
-		entity.setCategory(category);
+		entity = mapper.map(dto, ProductEntity.class);
 		entity = productRepository.save(entity);
-		ProductDTO result = mapper.map(entity, ProductDTO.class); 
+		ProductDTO result = mapper.map(entity, ProductDTO.class);
 		return result;
 	}
 
@@ -53,8 +45,7 @@ public class ProductService implements IProductService {
 		}
 	}
 
-	
-	//phan trang
+	// phan trang
 	@Override
 	public List<ProductDTO> finAll(Pageable pageable) {
 		List<ProductDTO> result = new ArrayList<>();
@@ -64,8 +55,7 @@ public class ProductService implements IProductService {
 		}
 		return result;
 	}
-	
-	
+
 	@Override
 	public List<ProductDTO> findAll() {
 		List<ProductDTO> result = new ArrayList<>();
@@ -81,6 +71,11 @@ public class ProductService implements IProductService {
 		return (int) productRepository.count();
 	}
 
-	
+	@Override
+	public ProductDTO findById(Long id) {
+		ProductEntity entity = productRepository.findById(id).get();
+		ProductDTO dto = mapper.map(entity, ProductDTO.class);
+		return dto;
+	}
 
 }
