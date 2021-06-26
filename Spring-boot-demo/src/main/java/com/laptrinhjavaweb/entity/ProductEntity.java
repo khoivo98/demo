@@ -1,14 +1,10 @@
 package com.laptrinhjavaweb.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -34,10 +30,6 @@ public class ProductEntity extends BaseEntity{
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
-	
-	@OneToMany(mappedBy = "product")
-	private List<OrderDetailEntity> orderDetails = new ArrayList<>();
-	
 	
 	public String getCode() {
 		return code;
@@ -86,14 +78,6 @@ public class ProductEntity extends BaseEntity{
 
 	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
-	}
-
-	public List<OrderDetailEntity> getOrderDetails() {
-		return orderDetails;
-	}
-
-	public void setOrderDetails(List<OrderDetailEntity> orderDetails) {
-		this.orderDetails = orderDetails;
 	}
 
 	

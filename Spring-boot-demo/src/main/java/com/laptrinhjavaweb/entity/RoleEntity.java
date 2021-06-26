@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,11 +18,8 @@ public class RoleEntity extends BaseEntity {
 	private String name;
 	
 	@ManyToMany(mappedBy = "roles")
-    private List<StaffEntity> staffs = new ArrayList<>();
+    private List<UserEntity> users = new ArrayList<>();
 
-	@OneToMany(mappedBy = "role")
-	private List<CustomerEntity> customers = new ArrayList<>();
-	
 	public String getCode() {
 		return code;
 	}
@@ -40,20 +36,12 @@ public class RoleEntity extends BaseEntity {
 		this.name = name;
 	}
 
-	public List<StaffEntity> getStaffs() {
-		return staffs;
+	public List<UserEntity> getUsers() {
+		return users;
 	}
 
-	public void setStaffs(List<StaffEntity> staffs) {
-		this.staffs = staffs;
-	}
-
-	public List<CustomerEntity> getCustomers() {
-		return customers;
-	}
-
-	public void setCustomers(List<CustomerEntity> customers) {
-		this.customers = customers;
+	public void setUsers(List<UserEntity> users) {
+		this.users = users;
 	}
 
 }
