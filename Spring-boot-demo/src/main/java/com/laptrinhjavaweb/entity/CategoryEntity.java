@@ -3,6 +3,7 @@ package com.laptrinhjavaweb.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -17,11 +18,15 @@ public class CategoryEntity extends BaseEntity {
 
 	@Column(name = "name")
 	private String name;
-
-	@OneToMany(mappedBy = "category")
-	private List<ProductEntity> products = new ArrayList<>();
-
 	
+	@Column(name = "details")
+	private String details;
+	
+	@OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+	private List<ProductEntity> products = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+	private List<NewsEntity> news = new ArrayList<>();
 
 	public String getCode() {
 		return code;
@@ -45,6 +50,22 @@ public class CategoryEntity extends BaseEntity {
 
 	public void setProducts(List<ProductEntity> products) {
 		this.products = products;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	public List<NewsEntity> getNews() {
+		return news;
+	}
+
+	public void setNews(List<NewsEntity> news) {
+		this.news = news;
 	}
 
 	

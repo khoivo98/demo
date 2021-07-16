@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,31 +18,27 @@ public class UserEntity extends BaseEntity {
 	@Column(name = "username")
 	private String userName;
 
+	@Column(name = "fullname")
+	private String fullName;
+	
+	
 	@Column(name = "password")
 	private String password;
+
+	@Column(name = "email")
+	private String email;
 
 	@Column
 	private Integer status;
 	
-	@OneToOne(mappedBy = "user")
-    private UserDetailsEntity userdetails;
 	
-	public UserDetailsEntity getUserdetails() {
-		return userdetails;
-	}
-
-
-	public void setUserdetails(UserDetailsEntity userdetails) {
-		this.userdetails = userdetails;
-	}
-
-
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany( fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", 
-				joinColumns = @JoinColumn(name = "userid"), 
-				inverseJoinColumns = @JoinColumn(name = "roleid"))
+				joinColumns = @JoinColumn(name = "user_id",referencedColumnName="id"), 
+				inverseJoinColumns = @JoinColumn(name = "role_id",referencedColumnName="id"))
 	private List<RoleEntity> roles = new ArrayList<>();
 
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -64,7 +59,13 @@ public class UserEntity extends BaseEntity {
 	}
 
 
+	public String getEmail() {
+		return email;
+	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public Integer getStatus() {
 		return status;
@@ -74,6 +75,9 @@ public class UserEntity extends BaseEntity {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+
+
+	
 
 
 	public List<RoleEntity> getRoles() {
@@ -86,8 +90,19 @@ public class UserEntity extends BaseEntity {
 	}
 
 
+	public void addRole(RoleEntity role) {
+		this.roles.add(role);
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
 
 
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
 
+	
 	
 }

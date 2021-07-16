@@ -23,11 +23,11 @@ public abstract class BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column
+	@Column(name = "created_by", updatable = false)
 	@CreatedBy
 	private String createdBy;
 
-	@Column
+	@Column(name = "created_date", updatable = false)
 	@CreatedDate
 	private Date createdDate;
 

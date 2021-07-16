@@ -1,7 +1,7 @@
 package com.laptrinhjavaweb.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,9 +30,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("User not found");
 		}
 		// get quyen
-		List<GrantedAuthority> authorities = new ArrayList<>();
+		Set<GrantedAuthority> authorities = new HashSet<>();
 		for (RoleEntity role : userEntity.getRoles()) {
-			authorities.add(new SimpleGrantedAuthority(role.getCode()));
+			authorities.add(new SimpleGrantedAuthority(role.getName()));
 		}
 		UserDetails userDetails = new User(userEntity.getUserName(), userEntity.getPassword(), authorities);
 		return userDetails;

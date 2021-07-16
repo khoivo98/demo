@@ -7,4 +7,6 @@ import com.laptrinhjavaweb.entity.UserEntity;
 public interface UserRepository extends JpaRepository<UserEntity, Long>{
 	//kiểm tra tài khoản
 		UserEntity findOneByUserNameAndStatus(String name, int status);
+	//kiem tra tai khoan da ton tai
+		UserEntity findByUserName(String userName);
 }

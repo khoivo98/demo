@@ -155,6 +155,15 @@
 /* 0.1. Body / Typography
    ========================================================================== */
 
+
+/*My CSS  */
+.error{
+	color:red;
+	font-size: 13px;
+	padding-top: 8px;
+}
+
+
 body {
 	 height: 100%;
     font-family: 'Verdana';
@@ -346,7 +355,6 @@ address {}
 .form-control-lg {
     padding: 12px;
 }
-
 
 /* Custom-Chekbox
 -------------------------------------------------------------- */
@@ -6260,6 +6268,8 @@ Vertical Timeline - by CodyHouse.co
     margin-bottom: 0;
     padding: 12px 0;
 }
+
+
 
 .form-group.row label {
     white-space: nowrap;

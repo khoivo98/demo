@@ -2,6 +2,7 @@ package com.laptrinhjavaweb.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -11,22 +12,12 @@ import javax.persistence.Table;
 @Table(name = "role")
 public class RoleEntity extends BaseEntity {
 	
-	@Column
-	private String code;
 	
 	@Column
 	private String name;
 	
-	@ManyToMany(mappedBy = "roles")
-    private List<UserEntity> users = new ArrayList<>();
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
+	@ManyToMany(mappedBy = "roles",cascade = CascadeType.ALL)
+    List<UserEntity> users = new ArrayList<>();
 
 	public String getName() {
 		return name;
@@ -43,5 +34,11 @@ public class RoleEntity extends BaseEntity {
 	public void setUsers(List<UserEntity> users) {
 		this.users = users;
 	}
+
+
+
+
+
+
 
 }

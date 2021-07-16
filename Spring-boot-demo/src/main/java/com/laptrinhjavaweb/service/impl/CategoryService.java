@@ -27,5 +27,34 @@ public class CategoryService implements IcategoryService{
 		}
 		return result;
 	}
+	@Override
+	public void deleteCategory(long[] ids) {
+		for (long item : ids) {
+			categoryRepository.deleteById(item);
+		}
+	}
+	
+	
+	@Override
+	public CategoryDTO save(CategoryDTO dto) {
+		CategoryEntity entity = new CategoryEntity();
+		if (dto.getId() != null) {
+			// cap nhat
+			entity = categoryRepository.findById(dto.getId()).get();
+		}
+		entity = mapper.map(dto, CategoryEntity.class);
+		entity = categoryRepository.save(entity);
+		CategoryDTO result = mapper.map(entity, CategoryDTO.class);
+		return result;
+	}
+	
+	
+	@Override
+	public CategoryDTO findById(Long id) {
+		CategoryEntity entity = categoryRepository.findById(id).get();
+		CategoryDTO dto = mapper.map(entity, CategoryDTO.class);
+		return dto;
+	}
+
 
 }

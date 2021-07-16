@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -19,6 +20,7 @@ import com.laptrinhjavaweb.service.impl.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SercurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -27,9 +29,11 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private CustomSuccessHandler customSuccessHandler;
 	
-	 @Autowired
-	    private DataSource dataSource;
+	@Autowired
+	private DataSource dataSource;
+	 
 	// ma hoa password
+	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
@@ -39,13 +43,10 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();
 		
 		http.authorizeRequests()
-				.antMatchers("/", "/home","/login","/logout").permitAll() // Cho phép tất cả mọi người truy cập vào 2 địa chỉ này
-				.antMatchers("/admin/**").hasAnyAuthority("ADMIN","MANAGER")
-				//.anyRequest().authenticated() // Tất cả các request khác đều cần phải xác thực mới được truy cập
-				// Khi người dùng đã login, với vai trò XX.
-		        // Nhưng truy cập vào trang yêu cầu vai trò YY,
-		        // Ngoại lệ AccessDeniedException sẽ ném ra.
-				
+				.antMatchers("/", "/home","/login","/logout","/register","/api/register").permitAll() // Cho phép tất cả mọi người truy cập vào 2 địa chỉ này
+				.antMatchers("/admin/**","/api/**").hasAnyAuthority("ADMIN","MANAGER")
+				.antMatchers("/api/user/**").hasAuthority("USER")
+				//Ko có quyền vẫn đăng nhập Ngoại lệ AccessDeniedException sẽ ném ra.
 				.and().exceptionHandling().accessDeniedPage("/accessDenied");
 		 http.authorizeRequests().and().formLogin() // Cho phép người dùng xác thực bằng form login
 				.loginProcessingUrl("/j_spring_security_check") // Submit URL
@@ -53,11 +54,15 @@ public class SercurityConfig extends WebSecurityConfigurerAdapter {
 				.successHandler(customSuccessHandler)
 				.failureUrl("/login?error")
 		 		.and()
-		 		.logout().deleteCookies("SESSION");
+		 		.logout()
+		 		.logoutUrl("/logout")
+		 		.logoutSuccessUrl("/login?logoutSuccess")
+		 		.permitAll();;
 	     // Cấu hình Remember Me.
 	        http.authorizeRequests().and() //
 	                .rememberMe().tokenRepository(this.persistentTokenRepository()) //
-	                .tokenValiditySeconds(1 * 24 * 60 * 60); // 24h
+	                .tokenValiditySeconds(15* 24 * 60 * 60);
+	             
 	 
 	}
 

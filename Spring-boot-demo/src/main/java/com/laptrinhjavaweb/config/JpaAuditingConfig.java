@@ -24,7 +24,7 @@ public class JpaAuditingConfig {
 			if (authentication == null || !authentication.isAuthenticated()) {
 				return null;
 			}
-			return Optional.ofNullable(authentication.getName());
+			return Optional.of(authentication.getName());
 		}
 	}
 }

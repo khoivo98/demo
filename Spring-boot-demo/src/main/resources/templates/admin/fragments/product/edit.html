@@ -39,29 +39,29 @@
 				<!-- ============================================================== -->
 				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 					<div class="card">		
-						<h5  th:if="${id}" class="card-header">Edit Form</h5>
-						<h5  th:unless="${id}" class="card-header">Add Form</h5>
+						<h5  th:if="${model.id}" class="card-header">Edit Form</h5>
+						<h5  th:unless="${model.id}" class="card-header">Add Form</h5>
 						<div class="card-body">
 
 							<form th:object="${model}" id="formSubmit">
 								<div class="form-group">
-									<label for="code">Product Code</label> <input id="code"
-										type="text" th:field="*{code}" data-parsley-trigger="change"
-										required="" autocomplete="off" class="form-control">
+									<label for="code">Product Code <span style="color:red">*</span></label> 
+									<input type="text" th:field="*{code}" data-parsley-trigger="change"
+										 autocomplete="off" class="form-control">
 								</div>
 								<div class="form-group">
-									<label for="name">Product Name</label> <input id="name"
-										type="text" th:field="*{name}" data-parsley-trigger="change"
-										required="" autocomplete="off" class="form-control">
+									<label for="name">Product Name <span style="color:red">*</span></label> 
+									<input type="text" th:field="*{name}" data-parsley-trigger="change"
+										 autocomplete="off" class="form-control">
 								</div>
 								<div class="form-group">
-									<label for="quantity">Quantity</label> <input id="quantity"
-										type="number" min="1" max="100" th:field="*{quantity}"
-										data-parsley-trigger="change" required="" class="form-control">
+									<label for="quantity">Quantity <span style="color:red">*</span></label> 
+									<input type="number" min="1" max="100" th:field="*{quantity}"
+											data-parsley-trigger="change"  class="form-control">
 								</div>
 								<div class="form-group">
-									<label for="price">Price</label> <input id="price" type="text"
-										th:field="*{price}" data-parsley-trigger="change" required=""
+									<label for="price">Price <span style="color:red">*</span></label> 
+									<input  type="number" th:field="*{price}" data-parsley-trigger="change" min="10000"  step="10000"
 										class="form-control">
 								</div>
 								<div class="form-group">
@@ -69,9 +69,9 @@
 										th:field="*{note}" class="form-control">
 								</div>
 								<div class="form-group">
-									<label for="note">Category</label> <select class="form-control"
+									<label for="">Category <span style="color:red">*</span></label> <select class="form-control"
 										id="categoryId" name="categoryId">
-										<option>---Select Category---</option>
+										<option value="">---Select Category---</option>
 										<option th:each="item : ${categories}" th:value="${item.id}"
 											th:selected="${item.id} == ${model.categoryId}"
 											th:utext="${item.name}"></option>
@@ -92,7 +92,7 @@
 										</p>
 									</div>
 								</div>
-								<input type="hidden" th:field="*{id}" id="id" />
+								<input type="hidden" th:field="*{id}" id="newId" />
 							</form>
 						</div>
 					</div>
@@ -100,6 +100,30 @@
 			</div>
 		</div>
 		<script type="text/javascript">
+		
+		
+		//Check before submit
+		$('#formSubmit').validate({
+			rules: {
+			      code: "required",
+			      name: "required", 
+			      price: "required", 
+			      quantity: "required", 
+			      categoryId: "required"
+			    },
+			    // Specify validation error messages
+			    messages: {
+			      code: "Error: Please enter product code!",
+			      name: "Error: Please enter product name!",
+			      price: "Error: Please enter price!",
+			      quantity: "Error: Please enter quantity!",
+			      categoryId: "Error: Please select category!"
+			    },
+			submitHandler: function(form) {
+			      form.submit();
+			}
+		});
+		//Exit
 		function warningExit(){
 	    	Swal.fire({
 	    		  title: 'Are you sure?',
@@ -113,15 +137,9 @@
 	    		  		window.location.href = "/admin/product-list";
 	    		  	}
 	    	});
-	    	};
-			//var editor='';
-			//$(document).ready(function(){
-			//hien thi khung text thanh khung soan thao
-			// content: id (jsp)
-			//editor = CKEDITOR.replace('content');
-			//});
-			//them va cap nhat
-			$('#btnAddOrUpdate').click(function(e) {
+	    };
+		$('#btnAddOrUpdate').click(function(e) {
+			if($('#formSubmit').valid()){
 				//khong submit nham url
 				e.preventDefault();
 				//get data(la javascript object)
@@ -134,13 +152,15 @@
 				//get rieng editor
 				//data['content'] = editor.getData();
 				//xet truong hop id
-				var id = $('#id').val();
+				var id = $('#newId').val();
 				if (id == "") {
 					add(data);
 				} else {
 					update(data);
 				}
 				;
+			}
+				
 			});
 			//funtion, ajax giống postman...gọi API
 			function add(data) {
