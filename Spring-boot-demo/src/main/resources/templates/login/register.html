@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{login/layout}">
+<head>
+<title layout:title-pattern="$CONTENT_TITLE">Login</title>
+</head>
+<body>
+	<!-- ============================================================== -->
+	<!-- login page  -->
+	<!-- ============================================================== -->
+	<section layout:fragment="content">
+			<div class="card">
+				<div class="card-header">
+					<h2 class="center">Registrations Form</h2>
+				</div>
+				<div th:if="${param.error}">
+					<div class="alert alert-danger center">Create Account Fail</div>
+				</div>
+				<form action="#" th:object="${model}" id="formSubmit">
+					<div class="card-body">
+						<div class="form-group">
+							<input class="form-control form-control-lg" type="text" th:field="*{userName}"
+							 required="required" placeholder="User name" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<input class="form-control form-control-lg" type="text" th:field="*{fullName}"
+							 placeholder="Full name" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<input class="form-control form-control-lg" type="email" th:field="*{email}"
+							 placeholder="E-mail" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<input class="form-control form-control-lg" th:field="*{password}"
+								type="password" placeholder="Password">
+						</div>
+						<div class="form-group">
+							<input class="form-control form-control-lg" name="confirmPassword"
+								type="password" placeholder="Confirm password">
+						</div>
+						<div class="form-group pt-2">
+							<button id="btnAdd" class="btn btn-block btn-primary" type="submit">Register</button>
+						</div>	
+					</div>
+				</form>
+				<div class="card-footer bg-white">
+					<p>
+						Already member? <a th:href="@{/login}" class="text-secondary">Login Here.</a>
+					</p>
+				</div>
+			</div>
+			<script type="text/javascript">
+	//Check before submit
+	$('#formSubmit').validate({
+		    rules: {
+		      userName: "required",
+		      fullName: "required",
+		      email:{
+		    	  required:true,
+		    	  email:true
+		      },
+			  password:"required",
+			  confirmPassword:{
+				  required: true,
+			      equalTo: "#password"
+		    },
+		    // Specify validation error messages
+		    messages: {
+		    },
+		    submitHandler: function(form) {
+		      form.submit();
+		    }
+		}
+	});
+	$('#btnAdd').click(function(e) {
+		if($('#formSubmit').valid()){
+			//khong submit nham url
+			e.preventDefault();
+			//get data(la javascript object)
+			var data = {};
+			var formData = $('#formSubmit').serializeArray();
+			//vòng for
+			$.each(formData, function(i, v) {
+				data["" + v.name + ""] = v.value;
+			});
+			add(data);
+		}
+		
+	});
+	//funtion, ajax giống postman...gọi API
+	function add(data) {
+		$.ajax({
+					url : '/api/register', //trỏ đến url
+					type : "POST", //kiểu 
+					contentType : "application/json",
+					data : JSON.stringify(data), //data đi kiểu json
+					dataType : "json", //kiểu data nhận
+					//trang thai
+					success : function(result) {
+						window.location.href = "/login?registerSuccess";
+					},
+					error : function(error) {
+						window.location.href = "/register?error";
+					}
+				});
+	};
+	</script>
+	</section>
+	<!-- ============================================================== -->
+	<!-- end login page  -->
+	<!-- ============================================================== -->
+
+</body>
+
+</html>

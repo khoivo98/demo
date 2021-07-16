@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{login/layout}">
+<head>
+<title layout:title-pattern="$CONTENT_TITLE">Login</title>
+</head>
+<body>
+	<!-- ============================================================== -->
+	<!-- login page  -->
+	<!-- ============================================================== -->
+	<section layout:fragment="content">
+		<div class="card ">
+			<div class="card-header text-center">
+				<h1>Account Login</h1>
+			</div>
+			<div th:if="${param.error}">
+				<div class="alert alert-danger center">User or password
+					incorect</div>
+			</div>
+			<div th:if="${param.registerSuccess}">
+				<div class="alert alert-success center">Register success</div>
+			</div>
+			<div th:if="${param.accessDenied}">
+				<div class="alert alert-danger center">You not authorize</div>
+			</div>
+			<div th:if="${param.logoutSuccess}">
+				<div class="alert alert-warning center">You are logged out</div>
+			</div>
+			<div class="card-body">
+				<form th:action="@{/j_spring_security_check}" method="post">
+					<div class="form-group">
+						<input class="form-control form-control-lg" name="username" required="required"
+							type="text" placeholder="Username">
+					</div>
+					<div class="form-group">
+						<input class="form-control form-control-lg" name="password" required="required"
+							type="password" placeholder="Password" autocomplete="off">
+					</div>
+					<div class="form-group">
+						<label class="custom-control custom-checkbox"> <input
+							class="custom-control-input" type="checkbox" name="remember-me">
+							<span class="custom-control-label">Remember Me?</span>
+						</label>
+					</div>
+					<button type="submit" class="btn btn-primary btn-lg btn-block">Sign
+						in</button>
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
+				</form>
+			</div>
+			<div class="card-footer bg-white p-0  ">
+				<div class="card-footer-item card-footer-item-bordered">
+					<a th:href="@{/register}" class="footer-link">Create Account</a>
+				</div>
+				<div class="card-footer-item card-footer-item-bordered">
+					<a href="#" class="footer-link">Forgot Password</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- ============================================================== -->
+	<!-- end login page  -->
+	<!-- ============================================================== -->
+
+</body>
+
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/layout}">
+<head>
+<title layout:title-pattern="$CONTENT_TITLE">Form Validations</title>
+
+</head>
+<body>
+	<section layout:fragment="content">
+		<div class="container-fluid  dashboard-content">
+			<!-- ============================================================== -->
+			<!-- pageheader -->
+			<!-- ============================================================== -->
+			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+					<div class="page-header">
+						<h2 class="pageheader-title">Form Validations</h2>
+						<div class="page-breadcrumb">
+								<ol class="breadcrumb">	
+								</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<!-- ============================================================== -->
+			<!-- message -->
+			<!-- ============================================================== -->
+			<div  th:if="#{message}">
+				<div  th:class="|alert alert-${alert}|"  th:utext ="${message}"></div>
+			</div>
+			
+
+			<div class="row-edit">
+				<!-- ============================================================== -->
+				<!-- form -->
+				<!-- ============================================================== -->
+				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+					<div class="card">		
+						<h5  th:if="${id}" class="card-header">Edit Form</h5>
+						<h5  th:unless="${id}" class="card-header">Add Form</h5>
+						<div class="card-body">
+
+							<form th:object="${model}" id="formSubmit">
+								<div class="form-group">
+									<label for="code">Category Code <span style="color:red">*</span></label> <input id="code"
+										type="text" th:field="*{code}" data-parsley-trigger="change"
+										autocomplete="off" class="form-control">
+								</div>
+								<div class="form-group">
+									<label for="name">Category Name <span style="color:red">*</span></label> <input id="name"
+										type="text" th:field="*{name}" data-parsley-trigger="change"
+										autocomplete="off" class="form-control">
+								</div>
+								<div class="form-group">
+									<label for="note">Details</label> <textarea id="details"
+										th:field="*{details}" class="form-control"></textarea>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 pl-0">
+										<p class="text-right">
+											<button th:if="${model.id}" id="btnAddOrUpdate" type="submit" 
+												class="btn btn-space btn-primary">Update</button>
+											<button th:unless="${model.id}" id="btnAddOrUpdate" type="submit"
+												class="btn btn-space btn-primary">Add</button>
+											<button class="btn btn-space btn-secondary" type="reset">Cancel</button>
+											<button type="button"  onclick="warningExit()" class="btn btn-space btn-danger" 
+											data-toggle="tooltip" title='Exit' >
+												<i class="fas fa-sign-out-alt"></i>
+											</button>
+										</p>
+									</div>
+								</div>
+								<input type="hidden" th:field="*{id}" id="id" />
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+		//Check before submit
+		$('#formSubmit').validate({
+			    rules: {
+			      code: "required",
+			      name: "required"
+			    },
+			    // Specify validation error messages
+			    messages: {
+			      code: "Error: Please enter category code!",
+			      name: "Error: Please enter category name!"
+			    },
+			    submitHandler: function(form) {
+			      form.submit();
+			    }
+			  });
+		//Exit
+		function warningExit(){
+	    	Swal.fire({
+	    		  title: 'Are you sure?',
+	    		  icon: 'warning',
+	    		  showCancelButton: true,
+	    		  confirmButtonColor: '#3085d6',
+	    		  cancelButtonColor: '#d33',
+	    		  confirmButtonText: 'Yes,Exit now!'
+	    	}).then((result) => {
+	    		  	if (result.isConfirmed) {
+	    		  		window.location.href = "/admin/category-list";
+	    		  	}
+	    	});
+	    	};
+	    	
+			//them va cap nhat
+			$('#btnAddOrUpdate').click(function(e) {
+				if($('#formSubmit').valid()){
+					//khong submit nham url
+					e.preventDefault();
+					//get data(la javascript object)
+					var data = {};
+					var formData = $('#formSubmit').serializeArray();
+					//vòng for
+					$.each(formData, function(i, v) {
+						data["" + v.name + ""] = v.value;
+					});
+					//xet truong hop id
+					var id = $('#id').val();
+					if (id == "") {
+						add(data);
+					} else {
+						update(data);
+					}
+					;
+				}
+			});
+			//funtion, ajax giống postman...gọi API
+			function add(data) {
+				$.ajax({
+							url : '/api/category', //trỏ đến url
+							type : "POST", //kiểu 
+							contentType : "application/json",
+							data : JSON.stringify(data), //data đi kiểu json
+							dataType : "json", //kiểu data nhận
+							//trang thai
+							success : function(result) {
+								window.location.href = "/admin/category-edit?message=insert_success";
+							},
+							error : function(error) {
+								window.location.href = "/admin/category-list?message=error_system";
+							}
+						});
+			};
+			function update(data) {
+				$.ajax({
+							url : '/api/category',
+							type : 'PUT',
+							contentType : 'application/json',
+							data : JSON.stringify(data),
+							dataType : 'json',
+							//trang thai
+							success : function(result) {
+
+								window.location.href = "/admin/category-edit?id="
+										+ result.id + "&message=update_success";
+							},
+							error : function(error) {
+								window.location.href = "/admin/category-list?message=error_system";
+							}
+						});
+			};
+		</script>
+
+	</section>
+</body>

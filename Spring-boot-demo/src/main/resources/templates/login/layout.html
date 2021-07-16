@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Login</title>
+<!-- Bootstrap CSS -->
+	<link rel="stylesheet" th:href="@{login/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{login/fonts/circular-std/style.css}">
+	<link rel="stylesheet" th:href="@{login/libs/css/style.css}">
+	<link rel="stylesheet" th:href="@{login/libs/css/mycustom.css}">
+	<link rel="stylesheet" th:href="@{login/fonts/fontawesome/css/fontawesome-all.css}">
+	<script th:src="@{login/jquery/jquery-3.3.1.min.js}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+</head>
+<body>
+	<div class="splash-container" >
+		
+		<!--body  -->
+		<section layout:fragment="content"></section>
+	</div>
+
+
+	<!-- Optional JavaScript -->
+	<script th:src="@{login/bootstrap/js/bootstrap.bundle.js}"></script>
+</body>
+</html>
